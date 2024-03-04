@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Epilogue } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import SideBar from "@/components/sidebar";
 import Header from "@/components/header";
 
