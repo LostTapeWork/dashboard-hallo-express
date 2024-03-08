@@ -31,14 +31,16 @@ export default function SideBar(SideBarProps: SideBarProps) {
   const router = useRouter();
   return (
     <>
-      <div className="pb-12 min-h-screen">
-        <div className="space-y-4 py-4">
-          <div className="px-3">
-            <div className="h-20 bg-[#232323] w-full rounded-lg mb-3 items-end flex px-3 py-2 text-white">
+      <div className="lg:pb-12 lg:min-h-screen">
+        <div className="space-y-4 py-4 ">
+          <div className="px-3 flex lg:flex-col flex-row  lg:items-start  ">
+            <div className="h-20 bg-[#232323] lg:w-full rounded-lg mb-3 items-end flex px-3 py-2 text-white">
               Hallo Express
             </div>
-            <h2 className="mb-2 px-4 text-lg font-semibold">Dashboard</h2>
-            <div className="space-y-1">
+            <h2 className="mb-2 px-4 text-lg font-semibold hidden lg:block">
+              Dashboard
+            </h2>
+            <div className="space-y-1  flex lg:flex-col flex-row lg:w-full ">
               {LinksDashboard.map((link) => {
                 return (
                   <Button
@@ -60,8 +62,10 @@ export default function SideBar(SideBarProps: SideBarProps) {
                 );
               })}
             </div>
-            <h2 className="mb-2 mt-10 px-4 text-lg font-semibold">Settings</h2>
-            <div className="space-y-1">
+            <h2 className="mb-2 mt-10 px-4 text-lg font-semibold hidden lg:block">
+              Settings
+            </h2>
+            <div className="space-y-1 flex flex-row lg:flex-col  lg:w-full">
               {LinksSetting.map((link) => {
                 return (
                   <Button

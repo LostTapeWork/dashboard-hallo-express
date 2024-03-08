@@ -16,7 +16,7 @@ export default function Header() {
       <div>
         <Button onClick={navCreateJob} className="py-3 px-6">
           <PlusIcon className="mr-2 w-4 h-4" />
-          Daftar Drivers
+          Driver Registration
         </Button>
       </div>
     </div>

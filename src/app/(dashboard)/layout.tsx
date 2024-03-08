@@ -22,12 +22,12 @@ export default function RootLayout({
         <main>
           <div className="border-t">
             <div className="bg-background">
-              <div className="flex flex-row">
-                <div className="hidden lg:block w-[18%] fixed">
+              <div className="flex lg:flex-row flex-col">
+                <div className="block lg:block w-full lg:w-[18%] lg:fixed">
                   <SideBar />
                 </div>
                 <div className="hidden lg:block w-[18%]"></div>
-                <div className="col-span-3 overflow-auto lg:col-span-5 lg:border-l w-[82%]">
+                <div className="col-span-3 overflow-auto lg:col-span-5 lg:border-l w-full lg:w-[82%]">
                   <div className="px-6 py-6 lg:px-8">
                     <Header />
                     <div>{children}</div>
