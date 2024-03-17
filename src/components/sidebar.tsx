@@ -23,7 +23,7 @@ const LinksDashboard = [
 
 const LinksSetting = [
   { name: "Settings", href: "/settings", icon: IoSettingsOutline },
-  { name: "Logout", href: "/logout", icon: RiLogoutCircleRLine },
+  { name: "Logout", href: "/sign-in", icon: RiLogoutCircleRLine },
 ];
 
 export default function SideBar(SideBarProps: SideBarProps) {
@@ -71,6 +71,9 @@ export default function SideBar(SideBarProps: SideBarProps) {
                   <Button
                     key={link.name}
                     variant={"ghost"}
+                    onClick={() => {
+                      router.push(link.href);
+                    }}
                     className={clsx(
                       "w-full justify-start text-black hover:text-primary",
                       {
