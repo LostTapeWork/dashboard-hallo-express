@@ -1,3 +1,4 @@
+"use client";
 import { ArrowLeftIcon, MoreVertical } from "lucide-react";
 import Link from "next/link";
 
@@ -15,8 +16,34 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { changePasswordSchema } from "@/lib/create-driver-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 export default function Page() {
+  const editDataSchema = useForm<z.infer<typeof changePasswordSchema>>({
+    resolver: zodResolver(changePasswordSchema),
+    defaultValues: {
+      // default values meneysuaikan dengan form schema
+      username: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (data: z.infer<typeof changePasswordSchema>) => {
+    console.log(data);
+  };
   return (
     <div>
       <div className="inline-flex  gap-5 mb-5">
@@ -33,7 +60,7 @@ export default function Page() {
       <Tabs defaultValue="detail">
         <TabsList className="mb-6">
           <TabsTrigger value="detail">Detail</TabsTrigger>
-          <TabsTrigger value="edit-data">Edit Data</TabsTrigger>
+          <TabsTrigger value="edit-data">Change Password</TabsTrigger>
         </TabsList>
         <TabsContent value="detail">
           <div className="flex flex-row justify-between mb-7">
@@ -133,7 +160,46 @@ export default function Page() {
             </Table>
           </div>
         </TabsContent>
-        <TabsContent value="edit-data">Change your password here.</TabsContent>
+        <TabsContent value="edit-data" className="w-[40%]">
+          <Form {...editDataSchema}>
+            <form
+              onSubmit={editDataSchema.handleSubmit(onSubmit)}
+              className="space-y-8"
+            >
+              <FormField
+                control={editDataSchema.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input placeholder="shadcn" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      This is your public display name.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={editDataSchema.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input placeholder="shadcn" {...field} />
+                    </FormControl>
+                    <FormDescription>This is your password.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Submit</Button>
+            </form>
+          </Form>
+        </TabsContent>
       </Tabs>
     </div>
   );

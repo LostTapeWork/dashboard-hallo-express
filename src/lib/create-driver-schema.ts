@@ -31,4 +31,13 @@ const driverSchema = z.object({
     .min(3, "Date of birth is required"),
 });
 
-export { driverSchema };
+const changePasswordSchema = z.object({
+  username: z
+    .string({ required_error: "Username is required" })
+    .min(8, "Username must be at least 8 characters long"),
+  password: z
+    .string({ required_error: "Password is required" })
+    .min(8, "Password must be at least 8 characters long"),
+});
+
+export { driverSchema, changePasswordSchema };

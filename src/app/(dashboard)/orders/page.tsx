@@ -22,6 +22,9 @@ import { MoreVertical } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FaArrowDownShortWide } from "react-icons/fa6";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import ActionButton from "@/components/action-button";
+import OrderActionButton from "@/components/order-button";
 
 export default function Page() {
   return (
@@ -96,13 +99,10 @@ export default function Page() {
                   <TableCell>{order.date}</TableCell>
                   <TableCell>{order.time}</TableCell>
                   <TableCell className="text-right">
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      disabled={order.status === "Packaged"}
-                    >
-                      <MoreVertical className="w-4 h-4" />
-                    </Button>
+                    <OrderActionButton
+                      url={`/order-detail/${index}`}
+                      status={order.status}
+                    ></OrderActionButton>
                   </TableCell>
                 </TableRow>
               ))}

@@ -6,6 +6,64 @@ const DRIVER_LIST_COLUMN: string[] = [
   "Operational Area",
   "Status",
 ];
+const DRIVER_TOP_COLUMN: string[] = [
+  "Full Name",
+  "operational Area",
+  "Total Order",
+];
+
+const DRIVER_TOP_DUMMY = [
+  {
+    fullName: "Tedy Syach",
+    operationalArea: "Kabupaten Tasikmlaya",
+    totalOrder: 10,
+  },
+  {
+    fullName: "Tedy Syach",
+    operationalArea: "Kabupaten Tasikmlaya",
+    totalOrder: 10,
+  },
+  {
+    fullName: "Tedy Syach",
+    operationalArea: "Kabupaten Tasikmlaya",
+    totalOrder: 10,
+  },
+  {
+    fullName: "Tedy Syach",
+    operationalArea: "Kabupaten Tasikmlaya",
+    totalOrder: 10,
+  },
+  {
+    fullName: "Tedy Syach",
+    operationalArea: "Kabupaten Tasikmlaya",
+    totalOrder: 10,
+  },
+  {
+    fullName: "Tedy Syach",
+    operationalArea: "Kabupaten Tasikmlaya",
+    totalOrder: 10,
+  },
+  {
+    fullName: "Tedy Syach",
+    operationalArea: "Kabupaten Tasikmlaya",
+    totalOrder: 10,
+  },
+  {
+    fullName: "Tedy Syach",
+    operationalArea: "Kabupaten Tasikmlaya",
+    totalOrder: 10,
+  },
+  {
+    fullName: "Tedy Syach",
+    operationalArea: "Kabupaten Tasikmlaya",
+    totalOrder: 10,
+  },
+  {
+    fullName: "Tedy Syach",
+    operationalArea: "Kabupaten Tasikmlaya",
+    totalOrder: 10,
+  },
+];
 
 const DRIVER_DUMMY = [
   {
@@ -13,6 +71,54 @@ const DRIVER_DUMMY = [
     plateNumber: "B 1234 ABC",
     operationalArea: "Kabupaten Tasikmlaya",
     status: "Active",
+  },
+  {
+    fullName: "Tedy Syach",
+    plateNumber: "B 1234 ABC",
+    operationalArea: "Kabupaten Tasikmlaya",
+    status: "UnActive",
+  },
+  {
+    fullName: "Tedy Syach",
+    plateNumber: "B 1234 ABC",
+    operationalArea: "Kabupaten Tasikmlaya",
+    status: "UnActive",
+  },
+  {
+    fullName: "Tedy Syach",
+    plateNumber: "B 1234 ABC",
+    operationalArea: "Kabupaten Tasikmlaya",
+    status: "UnActive",
+  },
+  {
+    fullName: "Tedy Syach",
+    plateNumber: "B 1234 ABC",
+    operationalArea: "Kabupaten Tasikmlaya",
+    status: "UnActive",
+  },
+  {
+    fullName: "Tedy Syach",
+    plateNumber: "B 1234 ABC",
+    operationalArea: "Kabupaten Tasikmlaya",
+    status: "UnActive",
+  },
+  {
+    fullName: "Tedy Syach",
+    plateNumber: "B 1234 ABC",
+    operationalArea: "Kabupaten Tasikmlaya",
+    status: "UnActive",
+  },
+  {
+    fullName: "Tedy Syach",
+    plateNumber: "B 1234 ABC",
+    operationalArea: "Kabupaten Tasikmlaya",
+    status: "UnActive",
+  },
+  {
+    fullName: "Tedy Syach",
+    plateNumber: "B 1234 ABC",
+    operationalArea: "Kabupaten Tasikmlaya",
+    status: "UnActive",
   },
   {
     fullName: "Tedy Syach",
@@ -118,4 +224,6 @@ export {
   READYTODELIVER_ORDER_DUMMY,
   DALAMPERJALANAN_ORDER_DUMMY,
   SELESAI_ORDER_DUMMY,
+  DRIVER_TOP_COLUMN,
+  DRIVER_TOP_DUMMY,
 };
