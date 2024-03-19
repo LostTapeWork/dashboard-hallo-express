@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -25,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import ActionButton from "@/components/action-button";
 import OrderActionButton from "@/components/order-button";
+import { useEffect, useState } from "react";
 
 export default function Page() {
   return (
