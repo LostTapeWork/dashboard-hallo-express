@@ -8,6 +8,7 @@ import {
   TableBody,
   TableCaption,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -28,8 +29,35 @@ import { useRouter } from "next/navigation";
 import ActionButton from "@/components/action-button";
 import OrderActionButton from "@/components/order-button";
 import { useEffect, useState } from "react";
+import axios from "axios"; // Import Axios
 
 export default function Page() {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchOrders() {
+      try {
+        const response = await axios.get("/api/orders");
+
+        // Axios automatically throws an error for non-2xx responses, so no need for response.ok check
+
+        const data = response.data; // Update this line
+        console.log(data.data);
+        setOrders(data.data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    }
+
+    fetchOrders();
+  }, []); // Empty dependency array to run once on component mount
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <div className="my-5">
@@ -61,56 +89,69 @@ export default function Page() {
             {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
             <TableHeader>
               <TableRow className="bg-[#232323] hover:bg-[#232323]">
-                {ORDER_COLUMN.map((column, index) => (
-                  <TableHead key={index} className="text-white">
-                    {column}
-                  </TableHead>
-                ))}
+                <TableHead className="text-white">Kode Transaksi</TableHead>
+                <TableHead className="text-white">Pelanggan</TableHead>
+                <TableHead className="text-white">Total Pembayaran</TableHead>
+                <TableHead className="text-white">Tanggal Transaksi</TableHead>
+                <TableHead className="text-white">Waktu Transaksi</TableHead>
+                <TableHead className="text-white">Metode Pembayaran</TableHead>
+                <TableHead className="text-white">Driver</TableHead>
+                <TableHead className="text-white">Status</TableHead>
                 <TableHead className="text-right text-white">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {ALL_ORDER_DUMMY.map((order, index) => (
-                <TableRow key={index}>
-                  <TableCell>{order.orderId}</TableCell>
-                  <TableCell>{order.customer}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={
-                        order.status === "Packaged"
-                          ? "secondary"
-                          : order.status === "In Delivery"
-                          ? "outline"
-                          : order.status === "Ready To Deliver"
-                          ? "destructive"
-                          : order.status === "Finished"
-                          ? "default"
-                          : "default"
-                      }
-                      className={
-                        order.status === "Packaged"
-                          ? "bg-yellow-100"
-                          : order.status === "In Delivery"
-                          ? "border-blue-500"
-                          : "default"
-                      }
-                    >
-                      {order.status}
-                    </Badge>
+              {orders.map((order: any, index: number) => (
+                <TableRow key={order.posTransaksiId}>
+                  <TableCell className="text-xs">
+                    {order.kodeTransaksi.length > 10
+                      ? `${order.kodeTransaksi.substring(0, 10)}...`
+                      : order.kodeTransaksi}
                   </TableCell>
-                  <TableCell>{order.driver}</TableCell>
-                  <TableCell>{order.date}</TableCell>
-                  <TableCell>{order.time}</TableCell>
+                  <TableCell className="text-xs">
+                    {order.namaPelanggan}
+                  </TableCell>
+                  <TableCell className="text-xs">
+                    {new Intl.NumberFormat("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                    }).format(order.totalPembayaran)}
+                  </TableCell>
+                  <TableCell className="text-xs">
+                    {order.tanggalTransaksi.split(" ")[0]}{" "}
+                  </TableCell>
+                  <TableCell className="text-xs">
+                    {order.tanggalTransaksi.split(" ")[1]}{" "}
+                  </TableCell>
+
+                  <TableCell className="text-xs">
+                    {/* {order.jenisPembayaranOnline} */}
+                    <Badge variant="outline">COD</Badge>
+                  </TableCell>
+                  <TableCell className="text-xs">
+                    {order.nama_driver ? order.nama_driver : "Assign Driver"}
+                  </TableCell>
+                  <TableCell>
+                    <Badge>{order.status}</Badge>
+                  </TableCell>
                   <TableCell className="text-right">
-                    <OrderActionButton
-                      url={`/order-detail/${index}`}
-                      status={order.status}
-                    ></OrderActionButton>
+                    <Button size="icon" variant="outline">
+                      <OrderActionButton
+                        url={`/order-detail/${order.posTransaksiId}`}
+                        status={order.status}
+                      />
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
+          <div className="flex items-center gap-3 justify-end mt-4">
+            <p>1</p>
+            <Button size="sm" variant="default">
+              Next
+            </Button>
+          </div>
         </TabsContent>
         <TabsContent value="dikemas">
           <Separator />

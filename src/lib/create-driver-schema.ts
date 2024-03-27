@@ -20,6 +20,7 @@ const driverSchema = z.object({
   fullName: z
     .string({ required_error: "Full name is required" })
     .min(3, "Full name is required"),
+  phone: z.string({ required_error: "Phone number is required" }),
   alamat: z
     .string({ required_error: "Address is required" })
     .min(3, "Address is required"),
@@ -40,4 +41,11 @@ const changePasswordSchema = z.object({
     .min(8, "Password must be at least 8 characters long"),
 });
 
-export { driverSchema, changePasswordSchema };
+const signInFormSchema = z.object({
+  email: z
+    .string({ required_error: "Email is required" })
+    .email("Invalid email"),
+  password: z.string({ required_error: "Password is required" }),
+});
+
+export { driverSchema, changePasswordSchema, signInFormSchema };

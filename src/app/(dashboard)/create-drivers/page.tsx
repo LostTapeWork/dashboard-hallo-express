@@ -24,8 +24,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+  const route = useRouter();
   const driverForm = useForm<z.infer<typeof driverSchema>>({
     resolver: zodResolver(driverSchema),
     defaultValues: {
@@ -41,8 +43,13 @@ export default function Page() {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof driverSchema>) => {
-    console.log(data);
+  const onSubmit = async (values: z.infer<typeof driverSchema>) => {
+    await fetch("/api/drivers/auth/register", {
+      method: "POST",
+      body: JSON.stringify(values),
+    });
+
+    route.push("/drivers");
   };
 
   return (
@@ -110,6 +117,28 @@ export default function Page() {
             ></FormField>
           </FieldInput>
 
+          <FieldInput title="Phone Number" subtitle="Phone number of driver">
+            <FormField
+              control={driverForm.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder="e.g. 08******"
+                      {...field}
+                      className="w-[450px]"
+                    />
+                  </FormControl>
+                  <FormDescription className="text-blue-500">
+                    at least 12 characters long
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            ></FormField>
+          </FieldInput>
+
           <FieldInput
             title="Operational Area"
             subtitle="Operational area of the driver"
@@ -131,7 +160,6 @@ export default function Page() {
                     <SelectContent>
                       <SelectItem value="Tasikmalaya">Tasikmalaya</SelectItem>
                       <SelectItem value="Bandung">Bandung</SelectItem>
-                      <SelectItem value="Banjar">Banjar</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormDescription className="text-blue-500">

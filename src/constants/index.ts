@@ -3,6 +3,7 @@ import { time } from "console";
 const DRIVER_LIST_COLUMN: string[] = [
   "Full Name",
   "Vehicle license plate",
+  "Phone Number",
   "Operational Area",
   "Status",
 ];

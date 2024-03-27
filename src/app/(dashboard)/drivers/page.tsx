@@ -1,3 +1,5 @@
+"use client";
+
 import ActionButton from "@/components/action-button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -15,8 +17,36 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FaArrowDownShortWide } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import OrderActionButton from "@/components/order-button";
 
 export default function Page() {
+  const [drivers, setDrivers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchOrders() {
+      try {
+        const response = await axios.get("/api/drivers");
+
+        // Axios automatically throws an error for non-2xx responses, so no need for response.ok check
+
+        const data = response.data; // Update this line
+        console.log(data.drivers);
+        setDrivers(data.drivers);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+      }
+    }
+
+    fetchOrders();
+  }, []); // Empty dependency array to run once on component mount
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <div className="my-5">
@@ -25,10 +55,9 @@ export default function Page() {
           All the information about your driver is listed below.
         </div>
       </div>
-      <Tabs defaultValue="semua" className="w-full">
+      <Tabs defaultValue="active" className="w-full">
         <div className="flex justify-between items-center">
           <TabsList className="mb-8">
-            <TabsTrigger value="semua">Semua</TabsTrigger>
             <TabsTrigger value="active">Active</TabsTrigger>
             <TabsTrigger value="unactive">UnActive</TabsTrigger>
           </TabsList>
@@ -39,7 +68,7 @@ export default function Page() {
             </Button>
           </div>
         </div>
-        <TabsContent value="semua">
+        <TabsContent value="active">
           <Separator />
           <Table>
             {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
@@ -54,33 +83,28 @@ export default function Page() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {DRIVER_DUMMY.map((driver, index) => (
-                <TableRow key={index}>
+              {drivers.map((driver: any, index) => (
+                <TableRow key={driver.id}>
                   <TableCell>{driver.fullName}</TableCell>
-                  <TableCell>{driver.plateNumber}</TableCell>
+                  <TableCell>{driver.licenseNumber}</TableCell>
+                  <TableCell>{driver.phone}</TableCell>
                   <TableCell>{driver.operationalArea}</TableCell>
                   <TableCell>
-                    <Badge
-                      className={
-                        driver.status === "Active"
-                          ? "bg-blue-500"
-                          : driver.status === "UnActive"
-                          ? "bg-red-500"
-                          : "default"
-                      }
-                    >
-                      {driver.status}
-                    </Badge>
+                    <Badge>{driver.driver.status}</Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <ActionButton url={`/driver-detail/${index}`} />
+                    <Button size="icon" variant="outline">
+                      <OrderActionButton
+                        url={`/driver-detail/${driver.id}`}
+                        status={driver.driver.statuss}
+                      />
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TabsContent>
-        <TabsContent value="active">Change your password here.</TabsContent>
         <TabsContent value="unactive">Change your password here.</TabsContent>
       </Tabs>
     </div>
